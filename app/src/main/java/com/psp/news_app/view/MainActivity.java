@@ -1,8 +1,10 @@
-package com.psp.news_app;
+package com.psp.news_app.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.psp.news_app.R;
 
 public class MainActivity extends AppCompatActivity {
 
