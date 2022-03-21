@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.psp.news_app.R;
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getNewListObserver().observe(this, new Observer<List<News>>() {
             @Override
             public void onChanged(List<News> news) {
+                // hide progressbar
+                binding.progressIndicator.setVisibility(View.INVISIBLE);
+
                 if(news != null) {
                     adapter.setList(news);
                 } else {
@@ -52,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestData() {
+        // visible progressbar
+        binding.progressIndicator.setVisibility(View.VISIBLE);
         viewModel.requestNewsData();
     }
 }
