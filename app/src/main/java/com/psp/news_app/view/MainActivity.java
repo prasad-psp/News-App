@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
             return;
         }
 
-        NewsBottomSheet bottomSheet = new NewsBottomSheet(this,news);
+        NewsBottomSheet bottomSheet = new NewsBottomSheet(news);
         bottomSheet.show(getSupportFragmentManager(),getString(R.string.news_bottom_tag));
     }
 }

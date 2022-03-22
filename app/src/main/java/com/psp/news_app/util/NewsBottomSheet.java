@@ -17,7 +17,6 @@ import com.psp.news_app.model.News;
 
 public class NewsBottomSheet extends BottomSheetDialogFragment {
 
-    private final Context context;
 
     private final News news;
 
@@ -25,8 +24,7 @@ public class NewsBottomSheet extends BottomSheetDialogFragment {
 
     private boolean initView = true;
 
-    public NewsBottomSheet(Context context, News news) {
-        this.context = context;
+    public NewsBottomSheet(News news) {
         this.news = news;
     }
 
