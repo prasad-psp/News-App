@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.psp.news_app.model.News;
 import com.psp.news_app.model.NewsList;
-import com.psp.news_app.network.Api;
+import com.psp.news_app.network.ApiService;
 import com.psp.news_app.network.RetrofitInstance;
 
 import java.util.ArrayList;
@@ -15,15 +15,15 @@ import retrofit2.Response;
 
 public class NewsRepo {
 
-    private final Api api;
+    private final ApiService apiService;
 
     public NewsRepo() {
-        api = RetrofitInstance.getInstance().create(Api.class);
+        apiService = RetrofitInstance.getInstance().create(ApiService.class);
     }
 
     public void requestNewsData(OnNewsCallback newsCallback) {
 
-        Call<NewsList> call = api.getNewsList();
+        Call<NewsList> call = apiService.getNewsList();
         call.enqueue(new Callback<NewsList>() {
             @Override
             public void onResponse(Call<NewsList> call, @NonNull Response<NewsList> response) {
