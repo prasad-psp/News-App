@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,8 +25,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     private final Context context;
 
-    public NewsAdapter(Context context) {
+    private final OnItemClicked itemClicked;
+
+    public NewsAdapter(Context context,OnItemClicked itemClicked) {
         this.context = context;
+        this.itemClicked = itemClicked;
     }
 
     public void setList(List<News> list) {
@@ -51,6 +55,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 .load(news.getImageUrl())
                 .apply(RequestOptions.centerInsideTransform())
                 .into(holder.image);
+
+        holder.rootLayout.setOnClickListener(view -> {
+            itemClicked.onClicked(news);
+        });
     }
 
     @Override
@@ -58,15 +66,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         return list != null ? list.size() : 0;
     }
 
+    public interface OnItemClicked {
+        void onClicked(News news);
+    }
+
     static class NewsViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView txtTitle;
         private final ImageView image;
+        private final ConstraintLayout rootLayout;
 
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTitle = itemView.findViewById(R.id.txtNewsTitle);
             image = itemView.findViewById(R.id.imgNews);
+            rootLayout = itemView.findViewById(R.id.rootLayoutNewsItem);
         }
     }
 }
