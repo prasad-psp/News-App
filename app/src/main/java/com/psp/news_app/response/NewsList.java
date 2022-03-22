@@ -1,4 +1,6 @@
-package com.psp.news_app.model;
+package com.psp.news_app.response;
+
+import com.psp.news_app.model.News;
 
 import java.util.ArrayList;
 

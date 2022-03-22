@@ -3,7 +3,7 @@ package com.psp.news_app.repo;
 import androidx.annotation.NonNull;
 
 import com.psp.news_app.model.News;
-import com.psp.news_app.model.NewsList;
+import com.psp.news_app.response.NewsList;
 import com.psp.news_app.network.ApiService;
 import com.psp.news_app.network.RetrofitInstance;
 

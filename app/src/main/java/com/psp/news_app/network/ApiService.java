@@ -1,8 +1,6 @@
 package com.psp.news_app.network;
 
-import com.psp.news_app.model.NewsList;
-
-import java.util.List;
+import com.psp.news_app.response.NewsList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
