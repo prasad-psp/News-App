@@ -6,19 +6,18 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import com.psp.news_app.R;
 import com.psp.news_app.adapter.NewsAdapter;
 import com.psp.news_app.databinding.ActivityMainBinding;
 import com.psp.news_app.model.News;
+import com.psp.news_app.util.NewsBottomSheet;
 import com.psp.news_app.viewmodel.NewsViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NewsAdapter.OnItemClicked{
 
     private ActivityMainBinding binding;
 
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding.recycleView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,
                 false));
-        NewsAdapter adapter = new NewsAdapter(this);
+        NewsAdapter adapter = new NewsAdapter(this,this);
         binding.recycleView.setAdapter(adapter);
 
         // view model initialize
@@ -41,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getNewListObserver().observe(this, new Observer<List<News>>() {
             @Override
             public void onChanged(List<News> news) {
-                // hide progressbar
-                binding.progressIndicator.setVisibility(View.INVISIBLE);
-
                 if(news != null) {
                     adapter.setList(news);
                 } else {
@@ -52,12 +48,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        viewModel.getProgressbarObserver().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                binding.progressIndicator.setVisibility(integer);
+            }
+        });
+
         requestData();
     }
 
     private void requestData() {
-        // visible progressbar
-        binding.progressIndicator.setVisibility(View.VISIBLE);
         viewModel.requestNewsData();
+    }
+
+    @Override
+    public void onClicked(News news) {
+        if(news == null) {
+            return;
+        }
+
+        NewsBottomSheet bottomSheet = new NewsBottomSheet(this,news);
+        bottomSheet.show(getSupportFragmentManager(),getString(R.string.news_bottom_tag));
     }
 }
