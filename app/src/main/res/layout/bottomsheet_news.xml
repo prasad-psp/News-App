@@ -10,6 +10,7 @@
         android:id="@+id/imgNewsBottom"
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        android:layout_margin="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
