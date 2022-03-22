@@ -1,6 +1,6 @@
 package com.psp.news_app.viewmodel;
 
-import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -21,21 +21,37 @@ public class NewsViewModel extends ViewModel {
 
     private final MutableLiveData<List<News>> newsList;
 
+    private final MutableLiveData<Integer> progressbar;
+
     public NewsViewModel() {
         newsList = new MutableLiveData<>();
+        progressbar = new MutableLiveData<>();
+
+        // Hide progressbar
+        progressbar.setValue(View.INVISIBLE);
     }
 
     public MutableLiveData<List<News>> getNewListObserver() {
         return newsList;
     }
 
+    public MutableLiveData<Integer> getProgressbarObserver() {
+        return progressbar;
+    }
+
     public void requestNewsData() {
+        // show progressbar
+        progressbar.setValue(View.VISIBLE);
+
         Api api = RetrofitInstance.getInstance().create(Api.class);
         Call<NewsList> call = api.getNewsList();
 
         call.enqueue(new Callback<NewsList>() {
             @Override
             public void onResponse(Call<NewsList> call, @NonNull Response<NewsList> response) {
+                // Hide progressbar
+                progressbar.setValue(View.INVISIBLE);
+
                 NewsList list = response.body();
 
                 if(list != null) {
@@ -43,15 +59,12 @@ public class NewsViewModel extends ViewModel {
                 } else {
                     newsList.setValue(null);
                 }
-
-                Log.d("Response ",""+response);
-
-                Log.d("Response ",""+response.body());
             }
 
             @Override
             public void onFailure(Call<NewsList> call, Throwable t) {
-                Log.d("Response ",""+t.getMessage());
+                // Hide progressbar
+                progressbar.setValue(View.INVISIBLE);
             }
         });
     }
