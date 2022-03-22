@@ -1,11 +1,14 @@
 package com.psp.news_app.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.psp.news_app.R;
@@ -23,6 +26,10 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
 
     private NewsViewModel viewModel;
 
+    private NewsAdapter adapter;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
 
         binding.recycleView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,
                 false));
-        NewsAdapter adapter = new NewsAdapter(this,this);
+        adapter = new NewsAdapter(this,this);
         binding.recycleView.setAdapter(adapter);
 
         // view model initialize
@@ -57,6 +64,27 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.OnIte
 
         requestData();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.menuRefresh) {
+            // refresh menu clicked
+            adapter.clearAll();
+            viewModel.requestNewsData();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_menu,menu);
+        return true;
+    }
+
 
     private void requestData() {
         viewModel.requestNewsData();

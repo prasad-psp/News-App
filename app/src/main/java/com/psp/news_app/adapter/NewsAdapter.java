@@ -21,7 +21,7 @@ import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 
-    private List<News> list;
+    private List<News> list = new ArrayList<>();
 
     private final Context context;
 
@@ -33,8 +33,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
     public void setList(List<News> list) {
-        this.list = list;
+        this.list.addAll(list);
         notifyDataSetChanged();
+    }
+
+    public void clearAll() {
+        if(list != null && list.size() > 0) {
+            list.clear();
+            notifyDataSetChanged();
+        }
     }
 
 
