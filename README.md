@@ -1,6 +1,13 @@
 # News-App
 Android News Application.
 
+- This application is made using **MVVM** architecture.
+- It’s a simple news application which received the news via the API.
+- The received data from the API is then shown in the app.
+- Tools/Technologies used: **Android studio, Retrofit, Livedata, Recycler View, Glide**.
+
+
+
 
 
 ## Screen shots
